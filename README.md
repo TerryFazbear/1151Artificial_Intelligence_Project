@@ -64,8 +64,10 @@ rate of inflation|the percentage change in the price index for a given period co
 ### EDA
 **Number of financial institutions in years**: Nubmer of banks has a downtrend with year-to-year, which might related to 2008 financial crisis.
 <img src="https://i.imgur.com/jaIIaWb.png" width="50%" height="50%">
+
 **Default rate of banks**: Banks are either recidivist of defaulting or never default at all.
-<img src="https://i.imgur.com/eN0d1RT.png" width="50%" height="50%">
+<img src="https://i.imgur.com/eN0d1RT.png" width="30%" height="30%">
+
 **Default frequency of banks**:
 Most of banks have no default record at all.
 <img src="https://i.imgur.com/4sSdZPW.png" width="50%" height="50%">
