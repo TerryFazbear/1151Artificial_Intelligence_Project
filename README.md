@@ -1,4 +1,7 @@
 # Bank Failure Prediction
+
+ :speech_balloon:*This document is supplementory for AI final project presentation video. Due to the video time limitation of 15 miniutes, the slides and video can not cover comprehensive experimental details. Hope this attachement can provide more guidence and explaination of our projects.*
+ 
 ## Overview
 Bank failure refers to financial entities which can not fulfill loan obligation result from liquidity problems. Since financial institutions are usually with high levity and close cash flows exchanges, any default of an institution will cause ripple effect to the whole financial system. Therefore,  the issue of bank failure is more severe than corporate bond default, for its high social loss afterwards.
 
@@ -92,7 +95,7 @@ Most of banks(more than 4000 banks) have no default record at all.</br>
 ## Methodology
 1. Data preprocessing
 - Missing Values
-We remove data columns where 95% of values are 0; therefore, interbank_assets, derivatives_guarantor_obs, derivatives_beneficiary_obs are removed. Then, we use iterative imputor to fill in NaN values.
+We remove data columns where 95% of values are 0; therefore, interbank_assets, derivatives_guarantor_obs, derivatives_beneficiary_obs are removed. Then, we use iterative imputor to fill in NaN values.<br>
 **Figure 4: Correlation Heapmap after Preprocessing**
 <img alt="image" src="https://user-images.githubusercontent.com/104308942/173482647-64be2ee5-e811-46d6-96ed-1b913fe1fd7c.png">
 
@@ -132,8 +135,9 @@ Logistic |0.92| 0.92| 0.08
 
 Xgboost|XGBRF|Random Forest
 -|-|-
+![](https://i.imgur.com/R8GQtvS.png)|![](https://i.imgur.com/KHnV5DP.png)|![](https://i.imgur.com/v0Rbj0N.png)
 **KNN**|**Linear regression**|**Logistic regression**
--
+![](https://i.imgur.com/DYBKi9v.png)|![](https://i.imgur.com/iCmJ2Dv.png)|![](https://i.imgur.com/RwHuO7k.png)
 
 3. Out-of-sample Confusion Matrix
 
