@@ -76,24 +76,33 @@ Descriptive statistics of financial ratios
 
 
 ### EDA
-**Figure 1: Heatmap of US bank dataset**
-![](https://i.imgur.com/YNmSaHF.png)
-**Number of financial institutions in years**: Nubmer of banks has a downtrend with year-to-year, which might related to 2008 financial crisis.
-<img src="https://i.imgur.com/jaIIaWb.png" width="50%" height="50%">
+**Figure 1: Number of financial institutions in years**: Nubmer of banks has a downtrend with year-to-year, which might related to 2008 financial crisis.
+<img src="https://i.imgur.com/jaIIaWb.png" width="40%" height="40%">
 
-**Figure 2: Default rate of banks**: Banks are either recidivist of defaulting or never default at all.
-<img src="https://i.imgur.com/eN0d1RT.png" width="50%" height="50%">
+**Figure 2: Default rate of banks**: Banks are either recidivist of defaulting or never default at all.</br>
+<img src="https://i.imgur.com/eN0d1RT.png" width="30%" height="30%">
 
 **Figure 3: Default frequency of banks**:
-Most of banks have no default record at all.
-<img src="https://i.imgur.com/4sSdZPW.png" width="50%" height="50%">
+Most of banks have no default record at all.</br>
+<img src="https://i.imgur.com/4sSdZPW.png" width="40%" height="40%">
 
 ## Literature Review
 ### Factors for bank failure prediction
 ### Resampling
 ## Methodology
 1. Data preprocessing
+- Missing Values
+We remove data columns where 95% of values are 0; therefore, interbank_assets, derivatives_guarantor_obs, derivatives_beneficiary_obs are removed. Then, we use iterative imputor to fill in NaN values.
+**Figure 4: Correlation Heapmap after Preprocessing**
+<img alt="image" src="https://user-images.githubusercontent.com/104308942/173482647-64be2ee5-e811-46d6-96ed-1b913fe1fd7c.png">
+
+- Resampling
+Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data resize to nearly 1.
 2. Feature selection
+- Filter
+- Wrapper
+- Wrapper + Filter
+- Lasso
 3. Scaling and dimension reduction
 4. Modeling
 5. Optimization
