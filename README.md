@@ -93,34 +93,10 @@ Most of banks(more than 4000 banks) have no default record at all.</br>
 ### Factors for bank failure prediction
 ### Resampling
 ## Methodology
-1. Data preprocessing</br>
-- Missing Values
-We remove data columns where 95% of values are 0; therefore, interbank_assets, derivatives_guarantor_obs, derivatives_beneficiary_obs are removed. Then, we use iterative imputor to fill in NaN values.<br>
-**Figure 4: Correlation Heapmap after Preprocessing**
-<img alt="image" src="https://user-images.githubusercontent.com/104308942/173482647-64be2ee5-e811-46d6-96ed-1b913fe1fd7c.png">
-
-- Resampling</br>
-Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data resize to nearly 1.</br>
-
--|Raw data| SmoteEnn|SmoteTomek
--|-|-|-
-Negative(0)|186651|186354|194246
-Positive(1)|125957|186562|194454
-ratio|1.48|1|1
-2. Feature selection
-- Filter
-- Wrapper
-- Wrapper + Filter
-- Lasso
-3. Scaling and dimension reduction
-4. Modeling
-We choose XGboost, random forest, XGBRF, and KNN as our models.
-5. Optimization
-6. K-fold cross validation
-
-## Experiment Results
-### In and out-of sample test
-1. Performance
+### Preliminary Investigation: building up baselines
+#### In and out-of sample test
+In out-of-sample test, the differences of precisions and calls in each models are much larger than in-sample test and the accuracies of logistic and linear regression models can achieve to 80% higher. These phenomena are caused by the imbalanced data that most of data are 0, which is align with models' predictions. However, as for data 1, models cannot predict correctly. Accordingly, in this work, we use macro average, wich is the average of precission and call, to replace accuracy as a evaluation matrix. We take the results in this test as the baselines. The goal of the following work is to balance precision and call and also to improve macro averages.</br>
+1. Performance</br>
 
 In-sample|Accuracy|Precision|Call|
 -|-|-|-|
@@ -153,3 +129,37 @@ Xgboost|XGBRF|Random Forest
 ![](https://i.imgur.com/9bk2S73.png)|![](https://i.imgur.com/apHcthD.png)|![](https://i.imgur.com/7Yx0DPl.png)
 **KNN**|**Linear regression**|**Logistic regression**
 ![](https://i.imgur.com/LqBsRFG.png)|![](https://i.imgur.com/WPymOZQ.png)|![](https://i.imgur.com/oQWFuI8.png)
+### Implementation steps
+1. Data preprocessing</br>
+- Missing Values
+We remove data columns where 95% of values are 0; therefore, interbank_assets, derivatives_guarantor_obs, derivatives_beneficiary_obs are removed. Then, we use iterative imputor to fill in NaN values.<br>
+**Figure 4: Correlation Heapmap after Preprocessing**
+<img alt="image" src="https://user-images.githubusercontent.com/104308942/173482647-64be2ee5-e811-46d6-96ed-1b913fe1fd7c.png">
+
+- Resampling</br>
+Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data resize to nearly 1.</br>
+
+-|Raw data| SmoteEnn|SmoteTomek
+-|-|-|-
+Negative(0)|186651|186354|194246
+Positive(1)|125957|186562|194454
+ratio|1.48|1|1
+2. Feature selection
+- Filter
+- Wrapper
+- Wrapper + Filter
+- Lasso
+3. Scaling and dimension reduction</br>
+For quick model convergence, we standardize the data from 0 to 1. For dimension reduction, we use PCA to retain 90% of explained variance ratio.
+4. Modeling</br>
+We choose XGboost, random forest, XGBRF, and KNN as our models. Also, linear and logistic regressions are considered as the model baselines.
+5. Optimization: Fine-tuning hyperparameters of the selected models by try-and-error. For ensemble learning, we set numbers of tree to 100. For XGBRF and XGBoost, eta is inputed as 0.05 and the objective XGBoosting function is "binary:logistic".
+```python=
+XGBRFClassifier(n_estimators=100, subsample=0.9, eta=0.05)
+XGBClassifier(n_estimators=100, objective='binary:logistic', eta=0.05)
+RandomForestClassifier(n_estimators=100)
+```
+6. 10-fold cross validation
+
+## Experiment Results
+
