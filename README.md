@@ -111,6 +111,7 @@ Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data r
 ## Experiment Results
 ### In and out-of sample test
 1. Performance
+
 In-sample|Accuracy|Precision|Call|
 -|-|-|-|
 XGBRF|0.63|0.74|0.39
@@ -127,7 +128,8 @@ KNN|0.78 |0.87| 0.43
 Linear| 0.86| 0.93| 0.09
 Logistic |0.92| 0.92| 0.08
 
-2. Confusion Matrix
+2. In-sample Confusion Matrix
+
 Xgboost|XGBRF|Random Forest
 -|-|-
 **KNN**|**Linear regression**|**Logistic regression**
