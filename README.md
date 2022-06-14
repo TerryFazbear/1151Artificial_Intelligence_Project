@@ -1,6 +1,6 @@
 # Bank Failure Prediction
 
- :speech_balloon:*This document is supplementory for AI final project presentation video. Due to the video time limitation of 15 miniutes, the slides and video cannot cover comprehensive experimental details. Hope this attachement can provide more guidence and explaination of our projects.*
+ :speech_balloon:*This document is supplementory for AI final project presentation video. Due to the video time limitation of 15 miniutes, the slides and video cannot cover comprehensive experimental details. Hope this attachement can provide more guidence and explaination of our projects. The complete experiment results can be found in our [Google Colab](https://colab.research.google.com/drive/1UOQLgOUAaM31_giy-JzfFfaf0OKooaNj?authuser=1#scrollTo=YEo_fpHEMnXa)*
  
 ## Overview
 Bank failure refers to financial entities which can not fulfill loan obligation result from liquidity problems. Since financial institutions are usually with high levity and close cash flows exchanges, any default of an institution will cause ripple effect to the whole financial system. Therefore,  the issue of bank failure is more severe than corporate bond default, for its high social loss afterwards.
@@ -89,9 +89,6 @@ Descriptive statistics of financial ratios
 Most of banks(more than 4000 banks) have no default record at all.</br>
 <img src="https://i.imgur.com/4sSdZPW.png" width="40%" height="40%">
 
-## Literature Review
-### Factors for bank failure prediction
-### Resampling
 ## Methodology
 ### Preliminary Investigation: building up baselines
 #### In and out-of sample test
@@ -145,10 +142,17 @@ Negative(0)|186651|186354|194246
 Positive(1)|125957|186562|194454
 ratio|1.48|1|1
 2. Feature selection
-- Filter
-- Wrapper
-- Wrapper + Filter
-- Lasso
+- Filter</br>
+Remove noise by dropping features that are not correlative with the target, namely, failure. First is to dropping features whose correlation coefficients with target is lower than 0.25%. Next step is deleting any one of two features whose correlation is larger than 0.85 or smaller than -0.85. For example, the correlation of unemployement rate is strong negative to rate of inflation, therefore, we can remove unemplyement rate since these two features can provide us with similar description.
+
+- Wrapper<br>
+The drawback of wrapper is the high computational cost. As a result, in order to save computational time, we randomly select 10,000 samples to compute average scores in different number of features. However, sampling will lead to difference experiment results each time. Using backward sequential feature selector with decision tree to compute accuracy of each combination of features. In the below example, we choose 14 features as our selected subset since it has the highest score, which are rssd_id, htminv_assets, lev,  ciloan_assets, demanddep_assets, creditcard_line_obs, month, Size, loanagri_assets, Ciloan_assets, roa, resid_recol_obs, Tier1_car, housing start(million), and year.
+**Figure 5: Average scores over different sets of selected features**
+<img width="200" alt="image" src="https://user-images.githubusercontent.com/104308942/173612510-1a9ad774-b966-42fd-85ff-f695aebdc91c.png">
+- Wrapper + Filter (main feature selection method)
+- Lasso</br>
+Take Regularization methods, and use Lasso regression (L1) to remove features whose coefficient are 0.
+
 3. Scaling and dimension reduction</br>
 For quick model convergence, we standardize the data from 0 to 1. For dimension reduction, we use PCA to retain 90% of explained variance ratio.
 4. Modeling</br>
@@ -162,4 +166,45 @@ RandomForestClassifier(n_estimators=100)
 6. 10-fold cross validation
 
 ## Experiment Results
+For the following experiments, we will test the performance of our propsed methods.
+### Experiment A
+The purpose of experiment A is to verify after data resampling, the performance of model prediction will become better.
 
+Raw Data|XGBoost|XGBRF|Random Forest
+-|-|-|-
+Confusion Matrix|<img width="230" alt="image" src="https://user-images.githubusercontent.com/104308942/173615066-2fa4ab4e-9c9c-41fb-90e6-94cf0b5c0bba.png">|<img width="227" alt="image" src="https://user-images.githubusercontent.com/104308942/173614571-d0624b77-12ea-4af2-98ba-1f06948bf613.png">|<img width="235" alt="image" src="https://user-images.githubusercontent.com/104308942/173614918-6dd3a532-80d6-481f-a3a3-5a1833169449.png">
+Report|<img width="258" alt="image" src="https://user-images.githubusercontent.com/104308942/173615126-50362be4-7b48-402a-85c3-77c84569e3f4.png">|<img width="256" alt="image" src="https://user-images.githubusercontent.com/104308942/173614829-712403cb-62f7-4fff-8a83-1190605bb577.png">|<img width="265" alt="image" src="https://user-images.githubusercontent.com/104308942/173614990-6b44c357-ef0b-4b4e-8165-8491d8f02775.png">
+
+Smote-Tomek|XGBoost|XGBRF|Random Forest
+-|-|-|-
+Confusion Matrix|<img width="229" alt="image" src="https://user-images.githubusercontent.com/104308942/173615548-01d1a668-8247-4f7c-b65e-d950e4bf62b2.png">|<img width="231" alt="image" src="https://user-images.githubusercontent.com/104308942/173615683-d75a0ebf-2ddc-44d8-98ad-f7432ada0d52.png">|<img width="232" alt="image" src="https://user-images.githubusercontent.com/104308942/173615873-acc69fdd-a998-40df-9db5-7e4c38dec413.png">
+Report|<img width="258" alt="image" src="https://user-images.githubusercontent.com/104308942/173615591-4f9bb960-51eb-44a5-a9af-b3b5e563fecc.png">|<img width="253" alt="image" src="https://user-images.githubusercontent.com/104308942/173615772-d8f0835a-f5bf-43b9-9ffc-0edbfaaafe84.png">|<img width="255" alt="image" src="https://user-images.githubusercontent.com/104308942/173616043-8bc4b371-014e-4f30-90c0-376c56a46aea.png">
+
+Smote-ENN|XGBoost|XGBRF|Random Forest
+-|-|-|-
+Confusion Matrix|<img width="228" alt="image" src="https://user-images.githubusercontent.com/104308942/173616472-953b3986-6c36-4b8c-adc5-2cd9f7de446f.png">|<img width="234" alt="image" src="https://user-images.githubusercontent.com/104308942/173616663-ab5985a3-e2f1-4ad3-a719-a74289a83b37.png">|<img width="230" alt="image" src="https://user-images.githubusercontent.com/104308942/173616739-171315de-1ef3-4e75-8aa5-20193a99258f.png">
+Report|<img width="257" alt="image" src="https://user-images.githubusercontent.com/104308942/173616547-9db02ec1-2402-4323-a189-769c9b3e237b.png">|<img width="259" alt="image" src="https://user-images.githubusercontent.com/104308942/173616690-fad8d0c8-22f3-427d-bebf-3dfbd92f8e10.png">|<img width="254" alt="image" src="https://user-images.githubusercontent.com/104308942/173616783-2bc517b8-a468-4943-bd20-83bbfd4117a5.png">
+
+### Experiment B
+In this part, we will compare several feature selection methods with our proposed method, Wrapper combined Filter, by using XGBoost as the tested model.
+We can oberseve that after combining filter with wrapper, the result becomes better, from macro avg 0.77 to 0.86.
+
+Raw|Filter|Wrapper|Wrapper+Filter|Lasso
+-|-|-|-|-
+<img width="267" alt="image" src="https://user-images.githubusercontent.com/104308942/173617501-f831ad57-a2ef-487d-b8dd-eb806327bce9.png">|<img width="264" alt="image" src="https://user-images.githubusercontent.com/104308942/173617552-bc01ac77-2c39-42b8-9d55-a89dcab7ecb4.png">|<img width="264" alt="image" src="https://user-images.githubusercontent.com/104308942/173617617-fa491a7b-e030-458c-a8fc-043ed7369eec.png">|<img width="255" alt="image" src="https://user-images.githubusercontent.com/104308942/173617703-45b7bf41-564e-43bd-89e2-3bb72b6ff843.png">|<img width="259" alt="image" src="https://user-images.githubusercontent.com/104308942/173617756-72f36359-6087-427b-be9e-87b6a7c45887.png">
+
+### Experiment C
+We want to compare PCA with feature selection by taking XGBoost as the experimental model. Since PCA incorporates noise and create new dimension that are not real, creating an erroneous result, but feature selection removes noises by dropping variables with low relation with the target and better to perform model explainability. Therefore, we maintain that feature selection will give a better performance compared to PCA. 
+
+PCA|Feature selection|PCA+Feature Selection
+-|-|-
+<img width="257" alt="image" src="https://user-images.githubusercontent.com/104308942/173619602-8e9865e6-c320-4e3e-95ef-58148c7f7995.png">|<img width="257" alt="image" src="https://user-images.githubusercontent.com/104308942/173619876-f1a9ade6-75d3-4eba-be84-38f4c1ed3c97.png">|<img width="254" alt="image" src="https://user-images.githubusercontent.com/104308942/173619999-a89ccf54-5a5e-422b-b69a-b2d051e0dabc.png">
+
+The experiment result verify our hypothesis. Features selection has 0.88 macro average, which outperforms 0.81 in PCA.
+
+### Experiment D
+All the models are outperform the baselines.
+
+XGBRF|Random Forest|XGBoost|KNN|Linear Regression|Logistic Regression
+-|-|-|-|-|-
+<img width="253" alt="image" src="https://user-images.githubusercontent.com/104308942/173621580-6940eb2f-e311-4442-854b-de563ed49443.png">|<img width="260" alt="image" src="https://user-images.githubusercontent.com/104308942/173621649-354426d0-6bf2-4d5f-acb5-852176fad395.png">|<img width="251" alt="image" src="https://user-images.githubusercontent.com/104308942/173621716-1a4a1b67-26ed-4980-b87a-4e672e9e4901.png">|<img width="255" alt="image" src="https://user-images.githubusercontent.com/104308942/173621794-3f7a0ded-877e-4631-b121-064bd824e752.png">|<img width="256" alt="image" src="https://user-images.githubusercontent.com/104308942/173621943-392618a8-bcf2-4679-a287-8c3b2b80723b.png">|<img width="254" alt="image" src="https://user-images.githubusercontent.com/104308942/173621881-3fc2a89d-2c59-4c3a-9539-465950117175.png">
