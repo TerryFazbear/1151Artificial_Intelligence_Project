@@ -76,14 +76,14 @@ Descriptive statistics of financial ratios
 
 
 ### EDA
-**Figure 1: Number of financial institutions in years**: Nubmer of banks has a downtrend with year-to-year, which might related to 2008 financial crisis.
+**Figure 1: Number of financial institutions in years**: Nubmer of banks has a downtrend with year-to-year, which might related to 2008 financial crisis.</br>
 <img src="https://i.imgur.com/jaIIaWb.png" width="40%" height="40%">
 
 **Figure 2: Default rate of banks**: Banks are either recidivist of defaulting or never default at all.</br>
 <img src="https://i.imgur.com/eN0d1RT.png" width="30%" height="30%">
 
 **Figure 3: Default frequency of banks**:
-Most of banks have no default record at all.</br>
+Most of banks(more than 4000 banks) have no default record at all.</br>
 <img src="https://i.imgur.com/4sSdZPW.png" width="40%" height="40%">
 
 ## Literature Review
@@ -110,6 +110,7 @@ Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data r
 
 ## Experiment Results
 ### In and out-of sample test
+1. Performance
 In-sample|Accuracy|Precision|Call|
 -|-|-|-|
 XGBRF|0.63|0.74|0.39
@@ -125,3 +126,17 @@ XGBoost|0.54| 0.67| 0.25
 KNN|0.78 |0.87| 0.43
 Linear| 0.86| 0.93| 0.09
 Logistic |0.92| 0.92| 0.08
+
+2. Confusion Matrix
+Xgboost|XGBRF|Random Forest
+-|-|-
+**KNN**|**Linear regression**|**Logistic regression**
+-
+
+3. Out-of-sample Confusion Matrix
+
+Xgboost|XGBRF|Random Forest
+-|-|-
+![](https://i.imgur.com/9bk2S73.png)|![](https://i.imgur.com/apHcthD.png)|![](https://i.imgur.com/7Yx0DPl.png)
+**KNN**|**Linear regression**|**Logistic regression**
+![](https://i.imgur.com/LqBsRFG.png)|![](https://i.imgur.com/WPymOZQ.png)|![](https://i.imgur.com/oQWFuI8.png)
