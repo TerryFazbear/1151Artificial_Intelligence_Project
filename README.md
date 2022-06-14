@@ -1,6 +1,6 @@
 # Bank Failure Prediction
 
- :speech_balloon:*This document is supplementory for AI final project presentation video. Due to the video time limitation of 15 miniutes, the slides and video can not cover comprehensive experimental details. Hope this attachement can provide more guidence and explaination of our projects.*
+ :speech_balloon:*This document is supplementory for AI final project presentation video. Due to the video time limitation of 15 miniutes, the slides and video cannot cover comprehensive experimental details. Hope this attachement can provide more guidence and explaination of our projects.*
  
 ## Overview
 Bank failure refers to financial entities which can not fulfill loan obligation result from liquidity problems. Since financial institutions are usually with high levity and close cash flows exchanges, any default of an institution will cause ripple effect to the whole financial system. Therefore,  the issue of bank failure is more severe than corporate bond default, for its high social loss afterwards.
