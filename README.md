@@ -93,14 +93,20 @@ Most of banks(more than 4000 banks) have no default record at all.</br>
 ### Factors for bank failure prediction
 ### Resampling
 ## Methodology
-1. Data preprocessing
+1. Data preprocessing</br>
 - Missing Values
 We remove data columns where 95% of values are 0; therefore, interbank_assets, derivatives_guarantor_obs, derivatives_beneficiary_obs are removed. Then, we use iterative imputor to fill in NaN values.<br>
 **Figure 4: Correlation Heapmap after Preprocessing**
 <img alt="image" src="https://user-images.githubusercontent.com/104308942/173482647-64be2ee5-e811-46d6-96ed-1b913fe1fd7c.png">
 
-- Resampling
-Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data resize to nearly 1.
+- Resampling</br>
+Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data resize to nearly 1.</br>
+
+-|Raw data| SmoteEnn|SmoteTomek
+-|-|-|-
+Negative(0)|186651|186354|194246
+Positive(1)|125957|186562|194454
+ratio|1.48|1|1
 2. Feature selection
 - Filter
 - Wrapper
@@ -108,6 +114,7 @@ Using SmoteTomek and SmoteEnn to help the ratio of possitive and negative data r
 - Lasso
 3. Scaling and dimension reduction
 4. Modeling
+We choose XGboost, random forest, XGBRF, and KNN as our models.
 5. Optimization
 6. K-fold cross validation
 
