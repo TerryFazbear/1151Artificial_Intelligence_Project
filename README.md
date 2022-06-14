@@ -146,7 +146,7 @@ ratio|1.48|1|1
 Remove noise by dropping features that are not correlative with the target, namely, failure. First is to dropping features whose correlation coefficients with target is lower than 0.25%. Next step is deleting any one of two features whose correlation is larger than 0.85 or smaller than -0.85. For example, the correlation of unemployement rate is strong negative to rate of inflation, therefore, we can remove unemplyement rate since these two features can provide us with similar description.
 
 - Wrapper<br>
-The drawback of wrapper is the high computational cost. As a result, in order to save computational time, we randomly select 10,000 samples to compute average scores in different number of features. However, sampling will lead to difference experiment results each time. Using backward sequential feature selector with decision tree to compute accuracy of each combination of features. In the below example, we choose 14 features as our selected subset since it has the highest score, which are rssd_id, htminv_assets, lev,  ciloan_assets, demanddep_assets, creditcard_line_obs, month, Size, loanagri_assets, Ciloan_assets, roa, resid_recol_obs, Tier1_car, housing start(million), and year.
+The drawback of wrapper is the high computational cost. As a result, in order to save computational time, we randomly select 10,000 samples to compute average scores in different number of features. However, sampling will lead to difference experiment results each time. Using backward sequential feature selector with decision tree to compute accuracy of each combination of features. In the below example, we choose 14 features as our selected subset since it has the highest score, which are rssd_id, htminv_assets, lev,  ciloan_assets, demanddep_assets, creditcard_line_obs, month, Size, loanagri_assets, Ciloan_assets, roa, resid_recol_obs, Tier1_car, housing start(million), and year.</br>
 **Figure 5: Average scores over different sets of selected features**
 <img width="200" alt="image" src="https://user-images.githubusercontent.com/104308942/173612510-1a9ad774-b966-42fd-85ff-f695aebdc91c.png">
 - Wrapper + Filter (main feature selection method)
@@ -203,7 +203,7 @@ PCA|Feature selection|PCA+Feature Selection
 The experiment result verify our hypothesis. Features selection has 0.88 macro average, which outperforms 0.81 in PCA.
 
 ### Experiment D
-All the models are outperform the baselines.
+All the models outperform the baselines and Random Forest are the best among all with 0.94 accuracy and macro average scores.
 
 XGBRF|Random Forest|XGBoost|KNN|Linear Regression|Logistic Regression
 -|-|-|-|-|-
